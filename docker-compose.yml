@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: slamdb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - slam-data:/var/lib/postgresql/data
+    networks:
+      - slam-net
+
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      DB_HOST: postgres
+      DB_NAME: slamdb
+      DB_USER: admin
+      DB_PASSWORD: admin
+    depends_on:
+      - postgres
+    networks:
+      - slam-net
+
+  submit-ui:
+    build: ./submit-ui
+    ports:
+      - "3000:80"
+    networks:
+      - slam-net
+
+  view-ui:
+    build: ./view-ui
+    ports:
+      - "3001:80"
+    networks:
+      - slam-net
+
+volumes:
+  slam-data:
+
+networks:
+  slam-net:
+    driver: overlay

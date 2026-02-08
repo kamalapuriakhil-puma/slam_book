@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Slam Book - Submit</title>
+</head>
+<body>
+  <h2>Slam Book</h2>
+  <input id="name" placeholder="Your Name"/><br/><br/>
+  <textarea id="msg" placeholder="Your Message"></textarea><br/><br/>
+  <button onclick="submit()">Submit</button>
+
+  <script>
+    function submit() {
+      fetch("http://localhost:5000/submit", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          name: document.getElementById("name").value,
+          message: document.getElementById("msg").value
+        })
+      }).then(() => alert("Saved!"));
+    }
+  </script>
+</body>
+</html>

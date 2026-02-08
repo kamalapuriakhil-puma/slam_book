@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Slam Book - View</title>
+</head>
+<body>
+  <h2>Slam Messages</h2>
+  <ul id="list"></ul>
+
+  <script>
+    fetch("http://localhost:5000/entries")
+      .then(res => res.json())
+      .then(data => {
+        const list = document.getElementById("list");
+        data.forEach(item => {
+          const li = document.createElement("li");
+          li.innerText = item[0] + ": " + item[1];
+          list.appendChild(li);
+        });
+      });
+  </script>
+</body>
+</html>
